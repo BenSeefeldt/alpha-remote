@@ -70,12 +70,11 @@
     </style>
     <script>
 
-        const url = "http://192.168.122.1:8080/sony/camera/";
+        const url = "http://192.168.122.1:8080/sony/camera";
 
         function connect() {
             fetch(url, {
                 method: "POST",
-                mode: "no-cors",
                 body: JSON.stringify({
                     "method": "startRecMode",
                     "params": [],
@@ -94,7 +93,6 @@
         function takePicture() {
             fetch(url, {
                 method: "POST",
-                mode: "no-cors",
                 body: JSON.stringify({
                     "method": "actTakePicture",
                     "params": [],
@@ -113,7 +111,6 @@
         function disconnect() {
             fetch(url, {
                 method: "POST",
-                mode: "no-cors",
                 body: JSON.stringify({
                     "method": "stopRecMode",
                     "params": [],
