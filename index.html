@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpha Remote</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: dimgray;
+        }
+
+        h1 {
+            font-family: sans-serif;
+            text-align: center;
+            color: white;
+            font-weight: lighter;
+        }
+
+        #bottom-buttons {
+            bottom: 0;
+            position: fixed;
+            width: 100%;
+            margin: 0;
+            height: 10%;
+
+        }
+
+        .bottom-button {
+            width: 50%;
+            float: left;
+            height: 100%;
+            border: 0px;
+            background-color: transparent;
+            font-family: sans-serif;
+            font-weight: lighter;
+            color: white;
+            font-size: larger;
+        }
+
+        #main-area {
+            text-align: center
+        }
+
+        #shutter-button {
+            display: block;
+            width: 60%;
+            border-radius: 50%;
+            border: 3px solid black;
+            aspect-ratio: 1;
+            text-align: center;
+            margin: auto;
+            margin-top: 10%;
+            background: rgb(125, 8, 7);
+            background: linear-gradient(216deg, rgba(125, 8, 7, 1) 0%, rgba(204, 24, 18, 1) 96%, rgba(255, 94, 40, 1) 100%);
+        }
+
+        #instructions {
+            color: white;
+            font-family: sans-serif;
+            margin: auto;
+            margin-top: 10%;
+            width: 75%;
+            text-align: justify;
+            font-weight: lighter;
+            line-height: 1.3;
+        }
+    </style>
+    <script>
+
+        const url = "http://192.168.122.1:8080/sony/camera";
+
+        function connect() {
+            fetch(url, {
+                method: "POST",
+                mode: "no-cors",
+                body: JSON.stringify({
+                    "method": "startRecMode",
+                    "params": [],
+                    "id": 1,
+                    "version": "1.0"
+                })
+            })
+                .then((response) => {
+                    console.log(response)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        }
+
+        function takePicture() {
+            fetch(url, {
+                method: "POST",
+                mode: "no-cors",
+                body: JSON.stringify({
+                    "method": "actTakePicture",
+                    "params": [],
+                    "id": 1,
+                    "version": "1.0"
+                })
+            })
+                .then((response) => {
+                    console.log(response)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        }
+
+        function disconnect() {
+            fetch(url, {
+                method: "POST",
+                mode: "no-cors",
+                body: JSON.stringify({
+                    "method": "stopRecMode",
+                    "params": [],
+                    "id": 1,
+                    "version": "1.0"
+                })
+            })
+                .then((response) => {
+                    console.log(response)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        }
+
+    </script>
+</head>
+
+<body>
+    <h1>Alpha Remote</h1>
+    <div id="main-area">
+        <button id="shutter-button" type="button" onclick="takePicture()"></button>
+
+        <div id="instructions">
+            A simple shutter controller for the Sony a6000. May work with others. To use, start "Smart Remote Embedded"
+            application, and manually connect phone or computer to SSID. Press "Connect" to enable use of application.
+            Red button serves as shutter. Press "Disconnect" to stop session.
+        </div>
+    </div>
+    <div id="bottom-buttons">
+        <button class="bottom-button" type="button" onclick="connect()">Connect</button>
+        <button class="bottom-button" type="button" onclick="disconnect()">Disconnect</button>
+    </div>
+</body>
+
+</html>
